@@ -1,0 +1,34 @@
+import datetime
+
+class FoodItem:
+    def __init__(self, name, expiration_date):
+        self.name = name
+        self.expiration_date = expiration_date
+
+    def is_expired(self):
+        return datetime.datetime.now() > self.expiration_date
+
+class SmartRefrigerator:
+    def __init__(self):
+        self.food_items = []
+
+    def add_food_item(self, name, expiration_date):
+        item = FoodItem(name, expiration_date)
+        self.food_items.append(item)
+
+    def check_expiration_status(self):
+        expiring_items = [item for item in self.food_items if item.is_expired()]
+        if expiring_items:
+            print("Attention! The following items are about to expire:")
+            for item in expiring_items:
+                print(f"{item.name} - Expires on: {item.expiration_date}")
+        else:
+            print("No items are about to expire.")
+
+fridge = SmartRefrigerator()
+
+fridge.add_food_item("Milk", datetime.datetime(2024, 4, 15))
+fridge.add_food_item("Eggs", datetime.datetime(2024, 4, 20))
+fridge.add_food_item("Bread", datetime.datetime(2024, 2,10 ))
+
+fridge.check_expiration_status()
