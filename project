@@ -1,0 +1,37 @@
+from datetime import datetime, timedelta
+
+def check_item():
+    items = {
+        "apple": {"expiry_days": 7, "expiry_reduction_value": 2},
+        "banana": {"expiry_days": 5, "expiry_reduction_value": 1},
+        "orange": {"expiry_days": 3, "expiry_reduction_value": 3},
+        "carrot": {"expiry_days": 10, "expiry_reduction_value": 2},
+        "spinach": {"expiry_days": 5, "expiry_reduction_value": 1},
+        "broccoli": {"expiry_days": 7, "expiry_reduction_value": 3}
+    }
+
+    item_name = input("Enter the item you put in the fridge: ").lower()
+
+    if item_name in items:
+        item_info = items[item_name]
+        expiry_date = datetime.now() + timedelta(days=item_info["expiry_days"])
+        print(f"The {item_name} has an expiry date of {expiry_date.strftime('%Y-%m-%d')}.")
+
+        color_change = input("Is there a color change? (yes/no): ").lower()
+        if color_change == "yes":
+            color = input("Enter the color (brown, green, blue, etc.): ").lower()
+            if color in ["brown", "green", "blue"]:
+                item_info["expiry_days"] -= item_info["expiry_reduction_value"]
+                expiry_date = datetime.now() + timedelta(days=item_info["expiry_days"])
+                print(f"The expiry has been reduced to {expiry_date.strftime('%Y-%m-%d')}.")
+
+        gas_release = input("Are there any gas releases? (yes/no): ").lower()
+        if gas_release == "yes":
+            print("The item may have spoiled.")
+        else:
+            print(f"The item's current expiry date is {expiry_date.strftime('%Y-%m-%d')}.")
+
+    else:
+        print("Invalid item choice.")
+
+check_item()
